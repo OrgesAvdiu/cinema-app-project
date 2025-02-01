@@ -11,6 +11,9 @@ import java.util.List;
 @Entity
 public class Customer extends UserAccount {
 
+    @ManyToOne
+    @JoinColumn(name = "city_id", nullable = true, foreignKey = @ForeignKey(name = "fk_customer_city", foreignKeyDefinition = "FOREIGN KEY (city_id) REFERENCES City(id) ON DELETE RESTRICT"))
+    private City city;
 
     @Transient
     private String type = "Customer";

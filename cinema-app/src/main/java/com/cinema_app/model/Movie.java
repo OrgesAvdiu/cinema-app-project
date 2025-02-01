@@ -13,9 +13,9 @@ import lombok.ToString;
 @Data
 @Entity
 public class Movie extends BaseEntity{
-    private String Title;
-    private String Description;
-    private int Duration;
+    public String Title;
+    public String Description;
+    public int Duration;
     public LocalDateTime ReleaseDate;
     public double Rating;
     public String Language;
