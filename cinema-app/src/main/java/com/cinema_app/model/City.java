@@ -9,12 +9,11 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-
 public class City extends BaseEntity {
-     public String name;
+    public String name;
 
     @ManyToOne
-    @JoinColumn(name = "offer_id", nullable = false, foreignKey = @ForeignKey(name = "fk_city_offer", foreignKeyDefinition = "FOREIGN KEY (offer_id) REFERENCES Offer(id) ON DELETE RESTRICT"))
-    @JsonIgnoreProperties("city")
+    @JoinColumn(name = "offer_id", nullable = true, foreignKey = @ForeignKey(name = "fk_city_offer", foreignKeyDefinition = "FOREIGN KEY (offer_id) REFERENCES Offer(id) ON DELETE RESTRICT"))
     private Offer offer;
+
 }
