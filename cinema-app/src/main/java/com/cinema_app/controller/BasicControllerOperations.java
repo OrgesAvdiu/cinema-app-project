@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.cinema_app.model.BaseEntity;
 import com.cinema_app.service.BasicServiceOperations;
-// import com.cinema_app.validation.group.Create;
-// import com.cinema_app.validation.group.Update;
+ import com.cinema_app.validation.group.Create;
+ import com.cinema_app.validation.group.Update;
 
 import jakarta.validation.groups.Default;
 import lombok.RequiredArgsConstructor;
@@ -35,23 +35,23 @@ public abstract class BasicControllerOperations<S extends BasicServiceOperations
     return service.findAll();
   }
 
-  // @PostMapping
-  // public E create(@RequestBody @Validated({ Default.class, Create.class }) E entity) {
-  //   return service.save(entity);
-  // }
+  @PostMapping
+  public E create(@RequestBody @Validated({ Default.class, Create.class }) E entity) {
+    return service.save(entity);
+  }
 
-  // @PutMapping
-  // public E update(@RequestBody @Validated({ Default.class, Update.class }) E entity) {
-  //   return service.save(entity);
-  // }
+  @PutMapping
+  public E update(@RequestBody @Validated({ Default.class, Update.class }) E entity) {
+    return service.save(entity);
+  }
 
-  // @PostMapping("/validate")
-  // public void validateOnCreate(@RequestBody @Validated({ Default.class, Create.class }) E entity) {
-  // }
+  @PostMapping("/validate")
+  public void validateOnCreate(@RequestBody @Validated({ Default.class, Create.class }) E entity) {
+  }
 
-  // @PutMapping("/validate")
-  // public void validateOnUpdate(@RequestBody @Validated({ Default.class, Update.class }) E entity) {
-  // }
+  @PutMapping("/validate")
+  public void validateOnUpdate(@RequestBody @Validated({ Default.class, Update.class }) E entity) {
+  }
 
   @DeleteMapping("/{id}")
   public void deleteById(@PathVariable Long id) {

@@ -1,7 +1,7 @@
 package com.cinema_app.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-//import com.cinema_app.validation.group.Create;
+import com.cinema_app.validation.group.Create;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Email;
@@ -33,7 +33,7 @@ public abstract class UserAccount extends BaseEntity implements UserDetails {
     @Email
     protected String email;
 
-   // @NotEmpty(groups = Create.class)
+    @NotEmpty(groups = Create.class)
     protected String password;
 
     protected LocalDate birthDate;

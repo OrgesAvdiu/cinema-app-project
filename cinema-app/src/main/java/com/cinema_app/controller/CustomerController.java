@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cinema_app.model.Customer;
-//import com.cinema_app.payload.LoginPayload;
+import com.cinema_app.payload.LoginPayload;
 import com.cinema_app.service.CustomerService;
 
 @RestController
@@ -17,8 +17,8 @@ public class CustomerController extends BasicControllerOperations<CustomerServic
         super(service);
     }
 
-    // @PostMapping("/login")
-    // public Customer login(@RequestBody @Validated LoginPayload login) {
-    //     return this.service.login(login.getEmail(), login.getPassword());
-    //}
+    @PostMapping("/login")
+    public Customer login(@RequestBody @Validated LoginPayload login) {
+        return this.service.login(login.getEmail(), login.getPassword());
+    }
 }
