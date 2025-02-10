@@ -1,9 +1,9 @@
 package com.cinema_app.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Transient;
+import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,8 +11,8 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-public class MovieDetail extends BaseEntity{
-    
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class MovieDetail extends BaseEntity {
 
     @Transient
     private int numberOfTickets;
@@ -22,4 +22,19 @@ public class MovieDetail extends BaseEntity{
 
     @NotEmpty
     private String paymentMethod;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cinema_id")
+    private Cinema cinema;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "movie_id")
+    private Movie movie;
+
+    private int ticketCount;
+    private LocalDateTime purchaseDate = LocalDateTime.now();
 }
