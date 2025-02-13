@@ -1,0 +1,12 @@
+export const QueryKeys = {
+  CATEGORIES: "CATEGORIES",
+  CUSTOMERS: "CUSTOMERS",
+  ADMINS:"ADMINS",
+  CITY:"CITY",
+  MOVIE: "MOVIES",
+  CINEMA: "CINEMAS",
+  ROOM: "ROOMS",
+  OFFER: "OFFERS",
+  MOVIEDETAIL: "MOVIEDETAIL",
+  USER_BY_EMAIL: (email) => "USER_" + email,
+};
