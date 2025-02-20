@@ -24,12 +24,12 @@ public abstract class BaseAuditEntity extends BaseEntity {
     @OneToOne(fetch = LAZY)
     @JoinColumn
     @LastModifiedBy
-    // private Admin modifiedByUser;
+    private Admin modifiedByUser;
 
-    // @OneToOne(fetch = LAZY)
+    @OneToOne(fetch = LAZY)
     @JoinColumn(updatable = false)
     @CreatedBy
-    // private Admin createdByUser;
+    private Admin createdByUser;
 
     @CreatedDate
     @Column(updatable = false)
