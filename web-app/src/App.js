@@ -1,25 +1,72 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { createTheme, CssBaseline, ThemeProvider } from '@material-ui/core';
+import { QueryClientProvider } from 'react-query';
+import { Route, Routes } from 'react-router-dom';
+import AdminLayout from './pages/admins/AdminLayout';
+import { queryClient, setQueryDefaults } from './services/QueryClient';
+import { AuthProvider } from './context/AuthContext';
+import { CartProvider } from './context/CartContext';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import AppRoutes from './routes/Routes';
+import DateFnsUtils from '@date-io/date-fns';
 
-function App() {
+// Custom theme setup
+const customTheme = createTheme({
+  overrides: {
+    MuiTableRow: {
+      head: {
+        background: "#121212",
+        color: 'white',
+      },
+    },
+    MuiTableSortLabel: {
+      root: {
+        color: 'white',
+        fontSize: '1.2em',
+        '&.MuiTableSortLabel-active': {
+          color: '#121212',
+        },
+        '& *': {
+          color: '#121212 !important',
+        },
+      },
+    },
+  },
+  palette: {
+    primary: {
+      main: '#121212',
+    },
+    secondary: {
+      main: '#DB0007',
+    },
+    text: {
+      primary: '#121212', // White text for contrast
+      secondary: '#121212', // Yellow secondary text
+    },
+ 
+    type: 'light',
+  },
+  toolbarHeight: 50,
+});
+
+setQueryDefaults();
+
+const App = () => {
+  const [theme, setTheme] = useState(customTheme);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthProvider>
+      <CartProvider>
+        <QueryClientProvider client={queryClient}>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <ThemeProvider theme={createTheme(theme)}>
+            <CssBaseline />
+            <Routes>{AppRoutes}</Routes>
+          </ThemeProvider>
+          </MuiPickersUtilsProvider>
+        </QueryClientProvider>
+      </CartProvider>
+    </AuthProvider>
   );
-}
+};
 
 export default App;
