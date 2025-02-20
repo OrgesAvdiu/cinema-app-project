@@ -10,7 +10,7 @@ import {
   useTheme,
 } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
-import AppMenuItem from "./AppMenuItem";
+import AppMenuItem from "./AppMenultem";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import SimpleBar from "simplebar-react";
 import "simplebar/dist/simplebar.min.css";
