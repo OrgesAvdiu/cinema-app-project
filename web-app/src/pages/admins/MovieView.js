@@ -78,7 +78,12 @@ export default function MovieView({}) {
     {
       title: 'Categories',
       field: 'category',
-      render: rowData => rowData.categories?.map(cat => cat.name).join(', '),
+      render: (rowData) => {
+        if (!rowData.category || rowData.category.length === 0) {
+          return 'No categories'; // Show 'No categories' if empty
+        }
+        return rowData.category.map(cat => cat.name).join(', '); // Ensure categories names are joined
+      },
       editComponent: props => MultipleCheckboxTableCell(props, allCategories, item => item.name)
     },    
   ];

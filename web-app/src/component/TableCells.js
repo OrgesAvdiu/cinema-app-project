@@ -16,32 +16,47 @@ import { isValid } from "date-fns";
 import { useState } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 
+// Adding a style for white text
+const useStyles = makeStyles((theme) => ({
+  whiteText: {
+    color: 'white',  // Ensures that the text color is white
+  },
+}));
+
 export const TextFieldTableCell = (
   props,
   errorRef,
   type,
-  textFieldProps = {},
-) => (
-  <ValidTextField
-    {...textFieldProps}
-    type={type}
-    fullWidth
-    label={props.columnDef.title}
-    value={props.value || (type === "number" ? 0 : "")}
-    onChange={(e) => props.onChange(e.target.value)}
-    error={errorRef.current && errorRef.current[props.columnDef.field]}
-  />
-);
+  textFieldProps = {}
+) => {
+  const classes = useStyles();
+
+  return (
+    <ValidTextField
+      {...textFieldProps}
+      type={type}
+      fullWidth
+      label={props.columnDef.title}
+      value={props.value || (type === "number" ? 0 : "")}
+      onChange={(e) => props.onChange(e.target.value)}
+      error={errorRef.current && errorRef.current[props.columnDef.field]}
+      InputProps={{
+        className: classes.whiteText, // Apply white text color here
+      }}
+    />
+  );
+};
 
 export const SelectTableCell = (props, errorRef, menuItems, equalOn) => {
+  const classes = useStyles();
   const value =
     equalOn && props.value
       ? menuItems
           .map((x) => x.value)
-          .find((x) => x[equalOn ] === props.value[equalOn])
+          .find((x) => x[equalOn] === props.value[equalOn])
       : props.value;
 
-  return (  
+  return (
     <ValidTextField
       select
       id="select"
@@ -51,6 +66,9 @@ export const SelectTableCell = (props, errorRef, menuItems, equalOn) => {
       value={value || {}}
       onChange={(e) => props.onChange(e.target.value)}
       label={props.columnDef.title}
+      InputProps={{
+        className: classes.whiteText, // Apply white text color here
+      }}
     >
       {menuItems.map((item, i) => (
         <MenuItem key={i} value={item.value}>
@@ -60,7 +78,9 @@ export const SelectTableCell = (props, errorRef, menuItems, equalOn) => {
     </ValidTextField>
   );
 };
+
 export const MultipleSelectTableCell = (props, allItems, renderLabel) => {
+  const classes = useStyles();
   const values = props.value || [];
   const valueIds = values.map((x) => x.id);
 
@@ -82,7 +102,7 @@ export const MultipleSelectTableCell = (props, allItems, renderLabel) => {
               color="secondary"
             />
           }
-          label={renderLabel(item)}
+          label={<span className={classes.whiteText}>{renderLabel(item)}</span>} // Apply white text color here
         />
       ))}
     </FormGroup>
@@ -90,7 +110,7 @@ export const MultipleSelectTableCell = (props, allItems, renderLabel) => {
 };
 
 export const TimeTableCell = (props, errorRef) => {
-  console.log("val", props);
+  const classes = useStyles();
   const value =
     typeof props.value === "string"
       ? new Date("01/01/1970 " + props.value)
@@ -98,7 +118,6 @@ export const TimeTableCell = (props, errorRef) => {
   const [dateFormatError, setDateFormatError] = useState("");
 
   function handleDateChange(value) {
-    console.log("val22", value);
     if (!isValid(value)) {
       setDateFormatError("Invalid date");
     } else {
@@ -121,15 +140,17 @@ export const TimeTableCell = (props, errorRef) => {
       onChange={handleDateChange}
       error={!!error || !!dateFormatError}
       helperText={error?.message || dateFormatError}
+      InputProps={{
+        className: classes.whiteText, // Apply white text color here
+      }}
     />
   );
 };
 
 export const MultipleCheckboxTableCell = (props, allItems, renderLabel) => {
+  const classes = useStyles();
   const values = props.value || [];
   const valueIds = values.map((x) => x.id);
-
-  
 
   return (
     <FormGroup row>
@@ -138,7 +159,6 @@ export const MultipleCheckboxTableCell = (props, allItems, renderLabel) => {
           key={item.id}
           control={
             <Checkbox
-              key={item.id}
               checked={valueIds.includes(item.id)}
               onChange={() => {
                 const newValues = valueIds.includes(item.id)
@@ -150,7 +170,7 @@ export const MultipleCheckboxTableCell = (props, allItems, renderLabel) => {
               color="secondary"
             />
           }
-          label={renderLabel(item)}
+          label={<span className={classes.whiteText}>{renderLabel(item)}</span>} // Apply white text color here
         />
       ))}
     </FormGroup>
@@ -158,6 +178,8 @@ export const MultipleCheckboxTableCell = (props, allItems, renderLabel) => {
 };
 
 export const NumberFieldTableCell = (props, errorRef, textFieldProps = {}) => {
+  const classes = useStyles();
+
   return (
     <TextField
       {...textFieldProps}
@@ -168,11 +190,16 @@ export const NumberFieldTableCell = (props, errorRef, textFieldProps = {}) => {
       onChange={(e) => props.onChange(e.target.value)}
       error={errorRef.current && errorRef.current[props.columnDef.field]}
       style={{ borderBottom: "1px solid rgba(0, 0, 0, 0.42)" }}
+      InputProps={{
+        className: classes.whiteText, // Apply white text color here
+      }}
     />
   );
 };
 
 export const PriceFieldTableCell = (props, errorRef, textFieldProps = {}) => {
+  const classes = useStyles();
+
   const parseValue = (value) => {
     return parseFloat(value.replace("$", ""));
   };
@@ -203,77 +230,9 @@ export const PriceFieldTableCell = (props, errorRef, textFieldProps = {}) => {
       onChange={handleChange}
       error={errorRef.current && errorRef.current[props.columnDef.field]}
       style={{ borderBottom: "1px solid rgba(0, 0, 0, 0.42)" }}
+      InputProps={{
+        className: classes.whiteText, // Apply white text color here
+      }}
     />
-  );
-};
-const useStyles = makeStyles((theme) => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: 200,
-  },
-}));
-
-export default function TimePickers({ value, onChange }) {
-  const classes = useStyles();
-  const [timeValue, setTimeValue] = useState(value || "07:30");
-
-  const handleChange = (e) => {
-    const newValue = e.target.value;
-    setTimeValue(newValue);
-    onChange(newValue);
-  };
-
-  return (
-    <form className={classes.container} noValidate>
-      <TextField
-        id="time"
-        label="Change time"
-        type="time"
-        defaultValue="07:30"
-        className={classes.textField}
-        InputLabelProps={{
-          shrink: true,
-        }}
-        inputProps={{
-          step: 300, // 5 min
-        }}
-        onChange={handleChange}
-      />
-    </form>
-  );
-}
-
-export const DayOfWeekTableCell = (props, errorRef) => {
-  const daysOfWeek = [
-    { value: "MONDAY", label: "Monday" },
-    { value: "TUESDAY", label: "Tuesday" },
-    { value: "WEDNESDAY", label: "Wednesday" },
-    { value: "THURSDAY", label: "Thursday" },
-    { value: "FRIDAY", label: "Friday" },
-    { value: "SATURDAY", label: "Saturday" },
-    { value: "SUNDAY", label: "Sunday" },
-  ];
-
-  return (
-    <ValidTextField
-      select
-      fullWidth
-      sx={{ m: 1, minWidth: 120 }}
-      error={errorRef.current && errorRef.current[props.columnDef.field]}
-      value={props.value || ""}
-      onChange={(e) => props.onChange(e.target.value)}
-      label={props.columnDef.title}
-    >
-      {daysOfWeek.map((day, index) => (
-        <MenuItem key={index} value={day.value}>
-          {day.label}
-        </MenuItem>
-      ))}
-    </ValidTextField>
   );
 };
