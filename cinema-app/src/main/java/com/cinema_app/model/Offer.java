@@ -12,9 +12,9 @@ import lombok.EqualsAndHashCode;
 @Data
 @Entity
 public class Offer extends BaseEntity{
-    public String Title;
-    public String Description;
-    public Double Discount;
-    public LocalDateTime StartDate;
-    public LocalDateTime EndDate;
+    public String title;
+    public String description;
+    public Double discount;
+    public LocalDateTime startDate;
+    public LocalDateTime endDate;
 }

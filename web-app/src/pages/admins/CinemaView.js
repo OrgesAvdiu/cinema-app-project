@@ -20,18 +20,18 @@ export default function CinemaView({}) {
     },
     {
       title: "Location",
-      field: "Location",
+      field: "location",
       editComponent: (props) => TextFieldTableCell(props, errorRef),
     },
     {
       title: "ContanctInfo",
-      field: "ContanctInfo",
+      field: "contanctInfo",
       editComponent: (props) => TextFieldTableCell(props, errorRef),
     },
     {
       title: "Room",
       field: "room",
-      render: (rowData) => rowData.room?.RoomNumber,
+      render: (rowData) => rowData.room?.roomNumber,
       editComponent: (props) =>
         SelectTableCell(
           props,

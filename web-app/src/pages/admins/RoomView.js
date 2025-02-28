@@ -17,17 +17,17 @@ export default function RoomView({}) {
     const columns = [
         {
           title: "RoomNumber",
-          field: "RoomNumber",
+          field: "roomNumber",
           editComponent: (props) => NumberFieldTableCell(props, errorRef),
         },
         {
           title: "Capacity",
-          field: "Capacity",
+          field: "capacity",
           editComponent: (props) => NumberFieldTableCell(props, errorRef),
         },
         {
           title: "Features",
-          field: "Features",
+          field: "features",
           editComponent: (props) => TextFieldTableCell(props, errorRef),
         },
     
