@@ -17,7 +17,7 @@ export default function CategoriesView({}) {
     },
     {
       title: "Description",
-      field: "Description",
+      field: "description",
       editComponent: (props) => TextFieldTableCell(props, errorRef),
     },
   ];
