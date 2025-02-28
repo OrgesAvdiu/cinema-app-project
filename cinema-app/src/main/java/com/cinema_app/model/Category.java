@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
 public class Category extends BaseEntity{
     @NotBlank
     public String name;
-    public String Description;
+    public String description;
     
     
 }

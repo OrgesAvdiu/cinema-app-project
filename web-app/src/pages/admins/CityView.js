@@ -20,7 +20,7 @@ const {data: allOfers} = useQuery(QueryKeys.OFFER, () => offerService.findAll())
    {
     title: "Offer",
     field: "offer",
-    render: (rowData) => rowData.offer?.Title,
+    render: (rowData) => rowData.offer?.title,
     editComponent: (props) =>
       SelectTableCell(
         props,

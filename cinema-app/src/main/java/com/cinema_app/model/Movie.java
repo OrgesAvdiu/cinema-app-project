@@ -13,14 +13,14 @@ import lombok.ToString;
 @Data
 @Entity
 public class Movie extends BaseEntity{
-    public String Title;
-    public String Description;
-    public int Duration;
-    public LocalDateTime ReleaseDate;
-    public double Rating;
-    public String Language;
+    public String title;
+    public String description;
+    public int duration;
+    public LocalDateTime releaseDate;
+    public double rating;
+    public String language;
     public String imageUrl;
-    public BigDecimal Price;
+    public BigDecimal price;
 
      @ManyToMany
     @JoinTable(name = "movie_category",

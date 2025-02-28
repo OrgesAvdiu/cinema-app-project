@@ -18,23 +18,23 @@ export default function MovieView({}) {
   const columns = [
    {
       title: "Title",
-      field: "Title",
+      field: "title",
       editComponent: (props) => TextFieldTableCell(props, errorRef),
    },
    {
     title: "Description",
-    field: "Description",
+    field: "description",
     editComponent: (props) => TextFieldTableCell(props, errorRef),
   },
   {
     title: "Duration",
-    field: "Duration",
+    field: "duration",
     editComponent: (props) => NumberFieldTableCell(props, errorRef),
   },
  {
  title: 'Release Date', 
  type:"date",
- field: 'ReleaseDate',     
+ field: 'releaseDate',     
  editComponent: (props) => (
   <MuiPickersUtilsProvider utils={DateFnsUtils}>
     <DatePicker
@@ -49,12 +49,12 @@ export default function MovieView({}) {
  },
  {
   title: "Rating",
-  field: "Rating",
+  field: "rating",
   editComponent: (props) => NumberFieldTableCell(props, errorRef),
 },
  {
   title: "Language",
-  field: "Language",
+  field: "language",
   editComponent: (props) => TextFieldTableCell(props, errorRef),
 },
 {
@@ -70,7 +70,7 @@ export default function MovieView({}) {
     
     {
       title: "Price",
-      field: "Price",
+      field: "price",
       render: rowData => `${rowData.price}$`,
       editComponent: (props) => PriceFieldTableCell(props, errorRef), 
     },
@@ -78,7 +78,12 @@ export default function MovieView({}) {
     {
       title: 'Categories',
       field: 'category',
-      render: rowData => rowData.categories?.map(cat => cat.name).join(', '),
+      render: (rowData) => {
+        if (!rowData.category || rowData.category.length === 0) {
+          return 'No categories'; // Show 'No categories' if empty
+        }
+        return rowData.category.map(cat => cat.name).join(', '); // Ensure categories names are joined
+      },
       editComponent: props => MultipleCheckboxTableCell(props, allCategories, item => item.name)
     },    
   ];

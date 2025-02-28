@@ -8,8 +8,8 @@ import lombok.EqualsAndHashCode;
 @Entity
 public class Cinema extends BaseEntity{
     public String name;
-    public String Location;
-    public String ContanctInfo;
+    public String location;
+    public String contanctInfo;
 
       @ManyToOne
     @JoinColumn(name = "room_id", nullable = true, foreignKey = @ForeignKey(name = "fk_cinema_room",

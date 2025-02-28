@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @Entity
 public class Room extends BaseEntity{
-    public int RoomNumber;
-    public int Capacity;
-    public String Features;
+    public int roomNumber;
+    public int capacity;
+    public String features;
 }

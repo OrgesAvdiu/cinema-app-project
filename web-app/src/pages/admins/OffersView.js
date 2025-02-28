@@ -17,24 +17,24 @@ export default function OffersView({}) {
     const columns = [
         {
           title: "Title",
-          field: "Title",
+          field: "title",
           editComponent: (props) => TextFieldTableCell(props, errorRef),
         },
         {
           title: "Description",
-          field: "Description",
+          field: "description",
           editComponent: (props) => TextFieldTableCell(props, errorRef),
         },
         {
             title: "Discount",
-            field: "Discount",
-            render: rowData => `${rowData.pricE}$`,
+            field: "discount",
+            render: rowData => `${rowData.price}$`,
             editComponent: (props) => PriceFieldTableCell(props, errorRef), 
           },
           {
             title: 'Start Date Time',
             type:"data",
-            field: 'StartDate',
+            field: 'startDate',
             initialEditValue: initialStartTime, editComponent: props => (
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                       <DatePicker
@@ -51,7 +51,7 @@ export default function OffersView({}) {
           {
             title: 'End Date Time',
             type:"date",
-            field: 'EndDate',
+            field: 'endDate',
             initialEditValue: initialEndTime,editComponent: props => (
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <DatePicker

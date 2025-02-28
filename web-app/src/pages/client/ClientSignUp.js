@@ -64,7 +64,6 @@ export default function ClientSignUp({ onSuccess, hideSignInLink, isLoading }) {
     password: "",
     birthDate: new Date(),
     phoneNumber: "",
-    city: "",
   });
 
   // use this to insert data to database
