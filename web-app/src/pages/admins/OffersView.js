@@ -28,7 +28,7 @@ export default function OffersView({}) {
         {
             title: "Discount",
             field: "discount",
-            render: rowData => `${rowData.price}$`,
+            render: rowData => `${Number(rowData.discount) || 0}$`,
             editComponent: (props) => PriceFieldTableCell(props, errorRef), 
           },
           {
