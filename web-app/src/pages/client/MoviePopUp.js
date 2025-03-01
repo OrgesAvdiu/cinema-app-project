@@ -14,12 +14,6 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     borderRadius: "10px",
   },
-  movieImage: {
-    width: "100%",
-    maxHeight: "300px",
-    borderRadius: "10px",
-    marginBottom: theme.spacing(2),
-  },
   detailsContainer: {
     display: "flex",
     flexDirection: "column",
@@ -44,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MoviePopUp({ movieQueryKey, handleClose, total, user }) {
+export default function MoviePopUp({ movie, handleClose, total, user }) {
   const classes = useStyles();
   const [customerInfo, setCustomerInfo] = useState({ firstName: '', lastName: '' });
   const [ticketCount, setTicketCount] = useState(1);
@@ -52,9 +46,7 @@ export default function MoviePopUp({ movieQueryKey, handleClose, total, user }) 
   const [paymentConfirmed, setPaymentConfirmed] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('');
   const [selectedCinema, setSelectedCinema] = useState('');
-  const [movieDetails, setMovieDetails] = useState(null);
-
-  const { data: movie, isLoading: movieLoading, isError: movieError } = useQuery(QueryKeys.MOVIE);
+  
   const { data: cinemas, isLoading: cinemasLoading, isError: cinemasError } = useQuery(QueryKeys.CINEMA);
 
   useEffect(() => {
@@ -102,9 +94,9 @@ export default function MoviePopUp({ movieQueryKey, handleClose, total, user }) 
     setPaymentConfirmed(true);
   };
 
-  if (movieLoading || cinemasLoading) return <div>Loading...</div>;
-  if (movieError || cinemasError) return <div>Error loading movie or cinemas data!</div>;
-  if (!movie || !cinemas) return null;
+  if (cinemasLoading) return <div>Loading...</div>;
+  if (cinemasError) return <div>Error loading cinemas data!</div>;
+  if (!cinemas) return null;
 
   return (
     <>
@@ -112,7 +104,6 @@ export default function MoviePopUp({ movieQueryKey, handleClose, total, user }) 
         <Dialog open={true} onClose={handleClose} classes={{ paper: classes.dialogPaper }}>
           <DialogTitle>{movie.title}</DialogTitle>
           <DialogContent>
-            <img src={movie.imageUrl} alt={movie.title} className={classes.movieImage} />
             <div className={classes.detailsContainer}>
               <Typography variant="body1">{movie.description}</Typography>
               <Typography className={classes.price}>Price: {movie.price}$</Typography>
