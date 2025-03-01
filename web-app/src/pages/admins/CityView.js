@@ -25,7 +25,7 @@ const {data: allOfers} = useQuery(QueryKeys.OFFER, () => offerService.findAll())
       SelectTableCell(
         props,
         errorRef,
-        allOfers?.map((x) => ({ value: x, label: x.name })) || [],
+        allOfers?.map((x) => ({ value: x, label: x.title })) || [],
         "id",
       ),
   },

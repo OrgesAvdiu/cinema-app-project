@@ -36,7 +36,7 @@ export default function CinemaView({}) {
         SelectTableCell(
           props,
           errorRef,
-          allRooms?.map((x) => ({ value: x, label: x.name })) || [],
+          allRooms?.map((x) => ({ value: x, label: x.roomNumber })) || [],
           "id",
         ),
     },
