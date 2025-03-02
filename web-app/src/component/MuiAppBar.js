@@ -7,17 +7,15 @@ import {
   Typography,
   Box,
   IconButton,
-  TextField,
+  InputBase,
   useTheme,
   Menu,
   MenuItem,
 } from "@material-ui/core";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import useUser from "../hooks/useUser";
-import DarkModeIcon from '@material-ui/icons/Brightness4';
-import LightModeIcon from '@material-ui/icons/Brightness7';
-import SearchIcon from '@material-ui/icons/Search'; // Import search icon
-import { useQuery } from "react-query"; // For fetching categories
+import SearchIcon from "@material-ui/icons/Search";
+import { useQuery } from "react-query";
 import { QueryKeys } from "../services/QueryKeys";
 
 const useStyles = makeStyles((theme) => ({
@@ -46,8 +44,9 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: "wrap",
   },
   toolbarTitle: {
-    fontFamily: "monospace",
     fontWeight: "bold",
+    fontStyle: "italic",
+    fontSize: "1.5rem",
     color: theme.palette.secondary.main,
     textDecoration: "none",
     margin: theme.spacing(1),
@@ -57,8 +56,15 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   link: {
-    color: theme.palette.secondary.main,
-    margin: theme.spacing(1, 1.5),
+    color: "#b0b0b0",
+    margin: theme.spacing(0, 1.5),
+    textDecoration: "none",
+    transition: "color 0.3s ease",
+    fontSize: "0.875rem",
+    "&:hover": {
+      color: "white",
+      textDecoration: "none",
+    },
     [theme.breakpoints.down("sm")]: {
       margin: theme.spacing(1),
     },
@@ -67,18 +73,28 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   searchInput: {
-    backgroundColor: theme.palette.background.paper,
-    borderBottom: `2px solid white`, // Underline effect
+    backgroundColor: "white",
+    color: "black",
+    border: "none",
     borderRadius: "4px",
-    padding: theme.spacing(1),
+    padding: theme.spacing(0.5),
     marginRight: theme.spacing(1),
-    width: "200px", // Adjust the width as needed
+    width: "0px",
+    paddingLeft: "0px",
+    paddingRight: "0px",
+    transition: "width 0.5s ease-out, padding 0.5s ease-out",
     "&:focus": {
-      outline: "none", // Remove the outline on focus
+      outline: "none",
     },
   },
+  searchInputOpen: {
+    width: "200px",
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
+    border: `2px solid black`,
+  },
   searchButton: {
-    color: "red", // Make the search icon red
+    color: "#b0b0b0",
   },
   leftNav: {
     display: "flex",
@@ -92,15 +108,27 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   menu: {
-    backgroundColor: theme.palette.background.default,
-    color: theme.palette.text.primary,
+    backgroundColor: "black",
+    color: "white",
     marginTop: theme.spacing(4),
     transform: "translateY(40%)",
   },
   menuItem: {
+    color: "white",
     "&:hover": {
       backgroundColor: theme.palette.secondary.main,
       color: theme.palette.background.paper,
+    },
+  },
+  categoryLink: {
+    color: "#b0b0b0",
+    margin: theme.spacing(0, 1.5),
+    textDecoration: "none",
+    transition: "color 0.3s ease",
+    fontSize: "0.875rem",
+    "&:hover": {
+      color: "white",
+      textDecoration: "none",
     },
   },
 }));
@@ -112,19 +140,17 @@ export default function MuiAppBar() {
   const theme = useTheme();
   const [categories, setCategories] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [searchOpen, setSearchOpen] = useState(false); // State to toggle search input visibility
+  const [searchOpen, setSearchOpen] = useState(false);
 
-  // Fetching categories using react-query with QueryKeys
-  const { data: categoryData, isLoading: categoriesLoading, isError: categoriesError } = useQuery(QueryKeys.CATEGORIES);
+  const { data: categoryData } = useQuery(QueryKeys.CATEGORIES);
 
   useEffect(() => {
     if (categoryData) {
-      setCategories(categoryData); // Update categories from the fetched data
+      setCategories(categoryData);
     }
   }, [categoryData]);
 
   const handleLogOut = () => {
-    console.log("Logging out...");
     localStorage.removeItem("user");
     localStorage.removeItem("cartItems");
     localStorage.removeItem("lines");
@@ -141,35 +167,26 @@ export default function MuiAppBar() {
   };
 
   const handleSearchToggle = () => {
-    setSearchOpen((prev) => !prev); // Toggle the search input visibility
+    setSearchOpen((prev) => !prev);
   };
 
   return (
     <AppBar position="static" elevation={0} className={classes.appBar}>
       <Box className={classes.leftNav}>
         <Typography
-          variant="h6"
+          variant="h4"
           noWrap
           className={classes.toolbarTitle}
           component={RouterLink}
           to={"/client/home"}
         >
-          Cinema
+          CINEMA
         </Typography>
 
         <Link
           variant="button"
-          to="/client/cinemas"
-          component={RouterLink}
-          className={classes.link}
-        >
-          Cinemas
-        </Link>
-
-        <Link
-          variant="button"
           onClick={handleCategoryClick}
-          className={classes.link}
+          className={`${classes.link} ${classes.categoryLink}`}
         >
           Categories
         </Link>
@@ -181,6 +198,7 @@ export default function MuiAppBar() {
           MenuListProps={{
             onMouseLeave: handleCloseMenu,
           }}
+          classes={{ paper: classes.menu }}
         >
           {categories && categories.length > 0 ? (
             categories.map((category) => (
@@ -189,52 +207,34 @@ export default function MuiAppBar() {
                 component={RouterLink}
                 to={`/client/category/${category.id}`}
                 onClick={handleCloseMenu}
+                className={classes.menuItem}
               >
                 {category.name}
               </MenuItem>
             ))
           ) : (
-            <MenuItem disabled>No Categories Available</MenuItem>
+            <MenuItem disabled className={classes.menuItem}>
+              No Categories Available
+            </MenuItem>
           )}
         </Menu>
       </Box>
 
       <Box className={classes.rightNav}>
-        {/* Search Icon Button (Red color) */}
-        <IconButton
-          onClick={handleSearchToggle}
-          className={classes.searchButton}
-        >
+        <IconButton onClick={handleSearchToggle} className={classes.searchButton}>
           <SearchIcon />
         </IconButton>
-
-        {/* Search Bar (only visible when searchOpen is true) */}
-        {searchOpen && (
-          <TextField
-            variant="outlined"
-            placeholder="Search..."
-            className={classes.searchInput}
-            size="small"
-          />
-        )}
-
+        <InputBase
+          placeholder="Search..."
+          className={`${classes.searchInput} ${searchOpen ? classes.searchInputOpen : ""}`}
+          inputProps={{ "aria-label": "search" }}
+        />
         {user ? (
-          <Button
-            color="primary"
-            variant="contained"
-            className={classes.link}
-            onClick={handleLogOut}
-          >
+          <Button color="primary" variant="contained" className={classes.link} onClick={handleLogOut}>
             Log out
           </Button>
         ) : (
-          <Button
-            color="primary"
-            variant="contained"
-            className={classes.link}
-            component={RouterLink}
-            to="/client/sign-in"
-          >
+          <Button color="primary" variant="contained" className={classes.link} component={RouterLink} to="/client/sign-in">
             Sign In
           </Button>
         )}

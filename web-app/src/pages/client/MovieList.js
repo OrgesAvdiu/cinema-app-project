@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useQuery } from "react-query";
-import { Grid, Paper, Tabs, Tab, Typography, Snackbar } from "@material-ui/core";
+import { Grid, Paper, Typography, Snackbar } from "@material-ui/core";
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from "@material-ui/core/styles";
 import { MovieService } from "../../services/MovieService";
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
       width: '95%',
       marginBottom: "100px",
       marginTop: "40px",
-      backgroundColor: "#121212",
+      backgroundColor: "#191919", // Same color as the page
       padding: "20px",
       borderRadius: "10px",
       [theme.breakpoints.down('sm')]: {
